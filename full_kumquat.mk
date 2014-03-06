@@ -1,4 +1,4 @@
-# Copyright (C) 2011 The Android Open Source Project
+# Copyright (C) 2012 The CyanogenMod Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,34 +11,25 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
+
 #
 # This file is the build configuration for a full Android
-# build for maguro hardware. This cleanly combines a set of
+# build for kumquat. This cleanly combines a set of
 # device-specific aspects (drivers) with a device-agnostic
 # product configuration (apps). Except for a few implementation
 # details, it only fundamentally contains two inherit-product
-# lines, full and maguro, hence its name.
+# lines, full and kumquat, hence its name.
 #
-#
- 
-# Torch
-PRODUCT_PACKAGES := \
-    Torch
 
 # Inherit from those products. Most specific first.
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
-
-#charging animation
-$(call inherit-product, device/sony/kumquat/prebuilt/resources-480x854.mk)
-
-# Inherit from kumquat device
+# This is where we'd set a backup provider if we had one
+#$(call inherit-product, device/sample/products/backup_overlay.mk)
 $(call inherit-product, device/sony/kumquat/kumquat.mk)
 
-# Set those variables here to overwrite the inherited values.
+# Discard inherited values and use our own instead.
 PRODUCT_NAME := full_kumquat
 PRODUCT_DEVICE := kumquat
-PRODUCT_BRAND := Android
-PRODUCT_MODEL := Xperia U
+PRODUCT_BRAND := Sony
 PRODUCT_MANUFACTURER := Sony
-#PRODUCT_RESTRICT_VENDOR_FILES := owner path
+PRODUCT_MODEL := Xperia U

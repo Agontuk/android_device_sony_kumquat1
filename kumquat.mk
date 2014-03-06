@@ -21,6 +21,10 @@ $(call inherit-product-if-exists, vendor/sony/kumquat/kumquat-vendor.mk)
 
 DEVICE_PACKAGE_OVERLAYS += device/sony/kumquat/overlay
 
+# Torch
+PRODUCT_PACKAGES += \
+    OmniTorch
+
 # Filesystem management tools
 PRODUCT_PACKAGES += \
     make_ext4fs \
