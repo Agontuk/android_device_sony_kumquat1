@@ -186,6 +186,9 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery/postrecoveryboot.sh:root/sbin/postrecoveryboot.sh \
     $(LOCAL_PATH)/recovery/pre-recovery.sh:system/bin/pre-recovery.sh
 
+#TWRP
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/recovery/twrp.fstab:recovery/root/etc/twrp.fstab
 
 # HW Configs
 PRODUCT_COPY_FILES += \

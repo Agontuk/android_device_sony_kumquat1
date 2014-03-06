@@ -88,18 +88,18 @@ TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/sony/kumquat/releasetools/se
 BOARD_HAS_SDCARD_INTERNAL := true
 BOARD_USES_MMCUTILS := true
 BOARD_HAS_NO_MISC_PARTITION := true
+BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_10x18.h\"
+BOARD_HAS_NO_SELECT_BUTTON := true
 
-# cwm specific
-RECOVERY_NAME := CWM-Kumquat
-BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/sony/kumquat/recovery/recovery-keys.c
-BOARD_USE_CUSTOM_RECOVERY_FONT := \"lucidaconsole_10x18.h\"
+# TWRP specific
+TARGET_RECOVERY_INITRC := device/sony/kumquat/recovery/init.rc
 TARGET_RECOVERY_FSTAB = device/sony/kumquat/prebuilt/root/fstab.st-ericsson
 RECOVERY_FSTAB_VERSION := 2
-
-# uncoment to enable back button in cwm (only if you commented XPERIA_CWM_TOUCH)
-#BOARD_HAS_NO_SELECT_BUTTON := true
-# coment this if you no want xperia touch enabled cwm
-COMMON_GLOBAL_CFLAGS += -DXPERIA_CWM_TOUCH
+DEVICE_RESOLUTION := 480x854
+TARGET_RECOVERY_PIXEL_FORMAT := "RGB_565"
+RECOVERY_GRAPHICS_USE_LINELENGTH := true
+BOARD_HAS_NO_REAL_SDCARD := true
+TWRP_EVENT_LOGGING := true # for touch debugging. will remove later
 
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/musb-ux500.0/musb-hdrc/gadget/lun%d/file"
 
