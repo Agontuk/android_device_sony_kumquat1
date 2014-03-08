@@ -99,7 +99,8 @@ DEVICE_RESOLUTION := 480x854
 TARGET_RECOVERY_PIXEL_FORMAT := "RGB_565"
 RECOVERY_GRAPHICS_USE_LINELENGTH := true
 BOARD_HAS_NO_REAL_SDCARD := true
-TWRP_EVENT_LOGGING := true # for touch debugging. will remove later
+
+COMMON_GLOBAL_CFLAGS += -DXPERIA_TWRP_TOUCH
 
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/musb-ux500.0/musb-hdrc/gadget/lun%d/file"
 
