@@ -1,3 +1,27 @@
+diff --git a/bootable/recovery/data.cpp b/bootable/recovery/data.cpp
+index 230ac73..a78d89b 100644
+--- a/bootable/recovery/data.cpp
++++ b/bootable/recovery/data.cpp
+@@ -1005,6 +1005,9 @@ int DataManager::GetMagicValue(const string varName, string& value)
+ 			char cap_s[4];
+ #ifdef TW_CUSTOM_BATTERY_PATH
+ 			string capacity_file = EXPAND(TW_CUSTOM_BATTERY_PATH);
++#ifdef XPERIA_TWRP_TOUCH
++			capacity_file += "/ab8500_fg";
++#endif
+ 			capacity_file += "/capacity";
+ 			FILE * cap = fopen(capacity_file.c_str(),"rt");
+ #else
+@@ -1019,6 +1022,9 @@ int DataManager::GetMagicValue(const string varName, string& value)
+ 			}
+ #ifdef TW_CUSTOM_BATTERY_PATH
+ 			string status_file = EXPAND(TW_CUSTOM_BATTERY_PATH);
++#ifdef XPERIA_TWRP_TOUCH
++			status_file += "/ab8500_chargalg";
++#endif
+ 			status_file += "/status";
+ 			cap = fopen(status_file.c_str(),"rt");
+ #else
 diff --git a/bootable/recovery/minuitwrp/events.c b/bootable/recovery/minuitwrp/events.c
 index f07fc14..e88763e 100644
 --- a/bootable/recovery/minuitwrp/events.c
