@@ -181,7 +181,6 @@ PRODUCT_COPY_FILES += \
 
 # Recovery bootstrap script
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/recovery/bootrec:root/sbin/bootrec \
     $(LOCAL_PATH)/recovery/usbid_init.sh:root/sbin/usbid_init.sh \
     $(LOCAL_PATH)/recovery/postrecoveryboot.sh:root/sbin/postrecoveryboot.sh \
     $(LOCAL_PATH)/recovery/pre-recovery.sh:system/bin/pre-recovery.sh
