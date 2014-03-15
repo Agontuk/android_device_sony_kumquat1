@@ -1,8 +1,20 @@
 diff --git a/bootable/recovery/data.cpp b/bootable/recovery/data.cpp
-index 230ac73..a78d89b 100644
+index 230ac73..6e8eb40 100644
 --- a/bootable/recovery/data.cpp
 +++ b/bootable/recovery/data.cpp
-@@ -1005,6 +1005,9 @@ int DataManager::GetMagicValue(const string varName, string& value)
+@@ -50,6 +50,11 @@
+ 	#include "cutils/properties.h"
+ #endif
+ 
++#ifdef XPERIA_TWRP_TOUCH
++	#define RED_LED_FILE "/sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/pwr-red/brightness"
++	#define GREEN_LED_FILE "/sys/devices/platform/nmk-i2c.2/i2c-2/2-0040/leds/pwr-green/brightness"
++#endif
++
+ extern "C"
+ {
+ 	#include "twcommon.h"
+@@ -1005,6 +1010,9 @@ int DataManager::GetMagicValue(const string varName, string& value)
  			char cap_s[4];
  #ifdef TW_CUSTOM_BATTERY_PATH
  			string capacity_file = EXPAND(TW_CUSTOM_BATTERY_PATH);
@@ -12,7 +24,7 @@ index 230ac73..a78d89b 100644
  			capacity_file += "/capacity";
  			FILE * cap = fopen(capacity_file.c_str(),"rt");
  #else
-@@ -1019,6 +1022,9 @@ int DataManager::GetMagicValue(const string varName, string& value)
+@@ -1019,6 +1027,9 @@ int DataManager::GetMagicValue(const string varName, string& value)
  			}
  #ifdef TW_CUSTOM_BATTERY_PATH
  			string status_file = EXPAND(TW_CUSTOM_BATTERY_PATH);
@@ -22,6 +34,29 @@ index 230ac73..a78d89b 100644
  			status_file += "/status";
  			cap = fopen(status_file.c_str(),"rt");
  #else
+@@ -1033,6 +1044,22 @@ int DataManager::GetMagicValue(const string varName, string& value)
+ 					charging = ' ';
+ 			}
+ 			nextSecCheck = curTime.tv_sec + 60;
++#ifdef XPERIA_TWRP_TOUCH
++			string value_on = "255";
++			string value_off = "0";
++			if (charging == '+') {
++				if (lastVal >= 90) {
++					TWFunc::write_file(RED_LED_FILE, value_off);
++					TWFunc::write_file(GREEN_LED_FILE, value_on);
++				} else {
++					TWFunc::write_file(RED_LED_FILE, value_on);
++					TWFunc::write_file(GREEN_LED_FILE, value_off);
++				}
++			} else {
++					TWFunc::write_file(RED_LED_FILE, value_off);
++					TWFunc::write_file(GREEN_LED_FILE, value_off);
++			}
++#endif
+ 		}
+ 
+ 		sprintf(tmp, "%i%%%c", lastVal, charging);
 diff --git a/bootable/recovery/minuitwrp/events.c b/bootable/recovery/minuitwrp/events.c
 index f07fc14..e88763e 100644
 --- a/bootable/recovery/minuitwrp/events.c
