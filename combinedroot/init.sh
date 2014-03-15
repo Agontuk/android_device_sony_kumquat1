@@ -38,9 +38,7 @@ busybox sleep 3
 load_image=/sbin/ramdisk.gz
 
 # boot decision
-if [ -s /dev/keycheck -o -e /cache/recovery/boot ]
-then
-   busybox rm -r /cache/recovery/boot
+if [ -s /dev/keycheck ] || busybox grep -q warmboot=0x5502 /proc/cmdline ; then
 	busybox echo 'RECOVERY BOOT' >>boot.txt
 	busybox mount -o remount,rw /
 	# recovery ramdisk
