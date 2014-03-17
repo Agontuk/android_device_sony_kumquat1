@@ -15,6 +15,7 @@ $(INSTALLED_BOOTIMAGE_TARGET): $(PRODUCT_OUT)/kernel $(recovery_ramdisk) $(INSTA
 	$(hide) cp $(PRODUCT_OUT)/utilities/busybox $(PRODUCT_OUT)/combinedroot/sbin/
 	$(hide) cp $(BOOTREC_DEVICE) $(PRODUCT_OUT)/combinedroot/sbin/
 	$(hide) cp $(BOOTREC_LED) $(PRODUCT_OUT)/combinedroot/sbin/
+	$(hide) cp -R $(PRODUCT_OUT)/recovery/root/sbin/* $(PRODUCT_OUT)/root/sbin/
 	$(hide) cp -R $(LOCAL_PATH)/prebuilt/root/default.prop $(PRODUCT_OUT)/root/
 	$(hide) cp -R $(LOCAL_PATH)/prebuilt/root/init.environ.rc $(PRODUCT_OUT)/root/
 	$(hide) cp -R $(LOCAL_PATH)/recovery/init.rc $(PRODUCT_OUT)/recovery/root/
