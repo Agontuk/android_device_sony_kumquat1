@@ -101,7 +101,7 @@ BOARD_HAS_NO_REAL_SDCARD := true
 TW_INTERNAL_STORAGE_PATH := "/sdcard"
 TW_INTERNAL_STORAGE_MOUNT_POINT := "sdcard"
 TW_HAS_NO_RECOVERY_PARTITION := true
-TW_CUSTOM_BATTERY_PATH := "/sys/class/power_supply"
+#TW_CUSTOM_BATTERY_PATH := "/sys/class/power_supply"
 TW_BRIGHTNESS_PATH := "/sys/class/leds/lcd-backlight/brightness"
 TW_MAX_BRIGHTNESS := 255
 
