@@ -87,16 +87,17 @@ index 230ac73..04b8172 100644
  
  		sprintf(tmp, "%i%%%c", lastVal, charging);
 diff --git a/bootable/recovery/minuitwrp/events.c b/bootable/recovery/minuitwrp/events.c
-index f07fc14..e88763e 100644
+index f07fc14..62a5f8d 100644
 --- a/bootable/recovery/minuitwrp/events.c
 +++ b/bootable/recovery/minuitwrp/events.c
-@@ -168,7 +168,12 @@ static int vk_init(struct ev *e)
+@@ -168,7 +168,13 @@ static int vk_init(struct ev *e)
  #endif
  
      // Blacklist these "input" devices
 +#ifdef XPERIA_TWRP_TOUCH
 +    if (strcmp(e->deviceName, "bma250") == 0 || strcmp(e->deviceName, "bma150") == 0 
-+        || strcmp(e->deviceName, "lsm303dlhc_acc_lt") == 0 || strcmp(e->deviceName, "lsm303dlh_mag") == 0)
++        || strcmp(e->deviceName, "lsm303dlhc_acc_lt") == 0 || strcmp(e->deviceName, "lsm303dlh_mag") == 0 
++        || strcmp(e->deviceName, "l3g4200d_gyr") == 0)
 +#else
      if (strcmp(e->deviceName, "bma250") == 0 || strcmp(e->deviceName, "bma150") == 0)
 +#endif
@@ -104,16 +105,17 @@ index f07fc14..e88763e 100644
          e->ignored = 1;
      }
 diff --git a/bootable/recovery/twrp.cpp b/bootable/recovery/twrp.cpp
-index ec87dd5..fda684a 100644
+index ec87dd5..20b226b 100644
 --- a/bootable/recovery/twrp.cpp
 +++ b/bootable/recovery/twrp.cpp
-@@ -81,6 +81,10 @@ int main(int argc, char **argv) {
+@@ -81,6 +81,11 @@ int main(int argc, char **argv) {
  	time_t StartupTime = time(NULL);
  	printf("Starting TWRP %s on %s", TW_VERSION_STR, ctime(&StartupTime));
  
++	gui_print("================================\n");
 +	gui_print("Team Win Recovery Project v%s\n", TW_VERSION_STR);
 +	gui_print("Modified by NoobCoder(Agontuk)\n");
-+	gui_print("================================\n\n\n");
++	gui_print("================================\n\n");
 +
  	// Load default values to set DataManager constants and handle ifdefs
  	DataManager::SetDefaultValues();
