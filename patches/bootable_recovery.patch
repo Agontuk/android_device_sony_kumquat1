@@ -67,7 +67,7 @@ index f07fc14..e88763e 100644
      // Blacklist these "input" devices
 +#ifdef XPERIA_TWRP_TOUCH
 +    if (strcmp(e->deviceName, "bma250") == 0 || strcmp(e->deviceName, "bma150") == 0 
-+        || strcmp(e->deviceName, "lsm303dlhc_acc_lt") == 0 || strcmp(e->deviceName, "lsm303dlh_mag") == 0) || strcmp(e->deviceName, "l3g4200d_gyr") == 0)
++        || strcmp(e->deviceName, "lsm303dlhc_acc_lt") == 0 || strcmp(e->deviceName, "lsm303dlh_mag") == 0 || strcmp(e->deviceName, "l3g4200d_gyr") == 0)
 +#else
      if (strcmp(e->deviceName, "bma250") == 0 || strcmp(e->deviceName, "bma150") == 0)
 +#endif
