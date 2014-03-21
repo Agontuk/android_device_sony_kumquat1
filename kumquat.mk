@@ -25,6 +25,10 @@ DEVICE_PACKAGE_OVERLAYS += device/sony/kumquat/overlay
 PRODUCT_PACKAGES += \
     OmniTorch
 
+# Recovery
+PRODUCT_PACKAGES += \
+    extract_elf_ramdisk
+
 # Filesystem management tools
 PRODUCT_PACKAGES += \
     make_ext4fs \
