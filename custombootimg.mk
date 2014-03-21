@@ -5,7 +5,7 @@ BOOTREC_DEVICE := $(LOCAL_PATH)/combinedroot/bootrec-device
 BOOTREC_LED := $(LOCAL_PATH)/combinedroot/bootrec-led
 
 INSTALLED_BOOTIMAGE_TARGET := $(PRODUCT_OUT)/boot.img
-$(INSTALLED_BOOTIMAGE_TARGET): $(PRODUCT_OUT)/kernel $(recovery_ramdisk) $(INSTALLED_RAMDISK_TARGET) $(PRODUCT_OUT)/utilities/busybox $(MKBOOTIMG) $(MINIGZIP) $(INTERNAL_BOOTIMAGE_FILES)
+$(INSTALLED_BOOTIMAGE_TARGET): $(PRODUCT_OUT)/kernel $(recovery_ramdisk) $(INSTALLED_RAMDISK_TARGET) $(PRODUCT_OUT)/utilities/busybox $(PRODUCT_OUT)/utilities/extract_elf_ramdisk $(MKBOOTIMG) $(MINIGZIP) $(INTERNAL_BOOTIMAGE_FILES)
 	$(call pretty,"Boot image: $@")
 	$(hide) mkdir -p $(PRODUCT_OUT)/combinedroot/sbin
 	$(hide) cp -R $(PRODUCT_OUT)/root/logo.rle $(PRODUCT_OUT)/combinedroot/logo.rle
@@ -13,6 +13,7 @@ $(INSTALLED_BOOTIMAGE_TARGET): $(PRODUCT_OUT)/kernel $(recovery_ramdisk) $(INSTA
 	$(hide) chmod 755 $(PRODUCT_OUT)/combinedroot/sbin/init.sh
 	$(hide) ln -s sbin/init.sh $(PRODUCT_OUT)/combinedroot/init
 	$(hide) cp $(PRODUCT_OUT)/utilities/busybox $(PRODUCT_OUT)/combinedroot/sbin/
+	$(hide) cp $(PRODUCT_OUT)/utilities/extract_elf_ramdisk $(PRODUCT_OUT)/combinedroot/sbin/
 	$(hide) cp $(BOOTREC_DEVICE) $(PRODUCT_OUT)/combinedroot/sbin/
 	$(hide) cp $(BOOTREC_LED) $(PRODUCT_OUT)/combinedroot/sbin/
 	$(hide) cp -R $(PRODUCT_OUT)/recovery/root/sbin/* $(PRODUCT_OUT)/root/sbin/
@@ -22,7 +23,6 @@ $(INSTALLED_BOOTIMAGE_TARGET): $(PRODUCT_OUT)/kernel $(recovery_ramdisk) $(INSTA
 	$(hide) cp -R $(LOCAL_PATH)/recovery/runatboot.sh $(PRODUCT_OUT)/recovery/root/sbin/
 	$(hide) rm -rf $(PRODUCT_OUT)/recovery/root/sbin/usbid_init.sh
 	$(hide) $(MKBOOTFS) $(PRODUCT_OUT)/recovery/root | gzip > $(PRODUCT_OUT)/ramdisk-recovery.gz
-	$(hide) cp -R $(PRODUCT_OUT)/ramdisk-recovery.gz $(PRODUCT_OUT)/combinedroot/sbin/ramdisk-recovery.gz
 	$(hide) $(MKBOOTFS) $(PRODUCT_OUT)/root | gzip > $(PRODUCT_OUT)/ramdisk.gz
 	$(hide) cp -R $(PRODUCT_OUT)/ramdisk.gz $(PRODUCT_OUT)/combinedroot/sbin/ramdisk.gz
 	$(hide) $(MKBOOTFS) $(PRODUCT_OUT)/combinedroot > $(PRODUCT_OUT)/combinedroot.cpio
