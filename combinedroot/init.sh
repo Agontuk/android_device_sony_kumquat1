@@ -40,8 +40,22 @@ load_image=/sbin/ramdisk.gz
 # boot decision
 if [ -s /dev/keycheck ] || busybox grep -q warmboot=0x5502 /proc/cmdline ; then
 	busybox echo 'RECOVERY BOOT' >>boot.txt
+
+	# extract recovery ramdisk from fota partition
+	busybox mknod -m 600 ${BOOTREC_FOTA_NODE}
 	busybox mount -o remount,rw /
-	# recovery ramdisk
+	busybox ln -sf /sbin/busybox /sbin/sh
+	extract_elf_ramdisk -i ${BOOTREC_FOTA} -o /sbin/ramdisk-recovery.cpio -t / -c
+	busybox rm /sbin/sh
+
+	# check if ramdisk is extracted correctly
+	if [ -e /sbin/ramdisk-recovery.cpio ]
+	then
+		# ramdisk extracted correctly. remove the boot.img's recovery
+		busybox rm /sbin/ramdisk-recovery.gz
+		busybox cat /sbin/ramdisk-recovery.cpio | busybox gzip > /sbin/ramdisk-recovery.gz
+		busybox rm /sbin/ramdisk-recovery.cpio
+	fi
 	load_image=/sbin/ramdisk-recovery.gz
 else
 	busybox echo 'ANDROID BOOT' >>boot.txt
