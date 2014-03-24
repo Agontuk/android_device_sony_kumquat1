@@ -22,9 +22,9 @@ $(INSTALLED_BOOTIMAGE_TARGET): $(PRODUCT_OUT)/kernel $(recovery_ramdisk) $(INSTA
 	$(hide) cp -R $(LOCAL_PATH)/recovery/init.rc $(PRODUCT_OUT)/recovery/root/
 	$(hide) cp -R $(LOCAL_PATH)/recovery/runatboot.sh $(PRODUCT_OUT)/recovery/root/sbin/
 	$(hide) rm -rf $(PRODUCT_OUT)/recovery/root/sbin/usbid_init.sh
-	$(hide) $(MKBOOTFS) $(PRODUCT_OUT)/recovery/root | gzip > $(PRODUCT_OUT)/ramdisk-recovery.gz
-	$(hide) $(MKBOOTFS) $(PRODUCT_OUT)/root | gzip > $(PRODUCT_OUT)/ramdisk.gz
-	$(hide) cp -R $(PRODUCT_OUT)/ramdisk.gz $(PRODUCT_OUT)/combinedroot/sbin/ramdisk.gz
+	$(hide) $(MKBOOTFS) $(PRODUCT_OUT)/root/ > $(PRODUCT_OUT)/ramdisk.cpio
+	$(hide) $(MKBOOTFS) $(PRODUCT_OUT)/recovery/root/ > $(PRODUCT_OUT)/ramdisk-recovery.cpio
+	$(hide) cp -R $(PRODUCT_OUT)/ramdisk.cpio $(PRODUCT_OUT)/combinedroot/sbin/ramdisk.cpio
 	$(hide) $(MKBOOTFS) $(PRODUCT_OUT)/combinedroot > $(PRODUCT_OUT)/combinedroot.cpio
 	$(hide) cat $(PRODUCT_OUT)/combinedroot.cpio | gzip > $(PRODUCT_OUT)/combinedroot.fs
 	$(hide) rm -rf $(PRODUCT_OUT)/system/bin/recovery

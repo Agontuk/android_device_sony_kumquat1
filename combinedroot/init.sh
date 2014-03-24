@@ -35,7 +35,7 @@ busybox cat ${BOOTREC_EVENT} > /dev/keycheck&
 busybox sleep 3
 
 # android ramdisk
-load_image=/sbin/ramdisk.gz
+load_image=/sbin/ramdisk.cpio
 
 # boot decision
 if [ -s /dev/keycheck ] || busybox grep -q warmboot=0x5502 /proc/cmdline ; then
@@ -51,12 +51,11 @@ if [ -s /dev/keycheck ] || busybox grep -q warmboot=0x5502 /proc/cmdline ; then
 	# check if ramdisk is extracted correctly
 	if [ -e /sbin/ramdisk-recovery.cpio ]
 	then
-		# ramdisk extracted correctly. remove the boot.img's recovery
-		busybox rm /sbin/ramdisk-recovery.gz
-		busybox cat /sbin/ramdisk-recovery.cpio | busybox gzip > /sbin/ramdisk-recovery.gz
-		busybox rm /sbin/ramdisk-recovery.cpio
+		# ramdisk extracted correctly
+		load_image=/sbin/ramdisk-recovery.cpio
+	else
+		busybox echo 'RECOVERY DOES NOT EXIST' >>boot.txt
 	fi
-	load_image=/sbin/ramdisk-recovery.gz
 else
 	busybox echo 'ANDROID BOOT' >>boot.txt
 fi
@@ -71,7 +70,7 @@ busybox rm -fr /dev/*
 
 # unpack the ramdisk image
 # -u should be used to replace the static busybox with dynamically linked one.
-busybox gunzip < ${load_image} | busybox cpio -uid
+busybox cpio -ui < ${load_image}
 
 export PATH="${_PATH}"
 exec /init
